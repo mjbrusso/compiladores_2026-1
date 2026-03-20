@@ -1,6 +1,7 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
+#include "monoc.tab.h"
 %}
 
 %option yylineno
@@ -14,6 +15,7 @@
 "("                        { return LPAREN; }
 ")"                        { return RPAREN; }
 
+ /*
 [0-9]+                     { return INTLITERAL;  }
 "+"                        { return PLUS; }
 "-"                        { return MINUS; }
@@ -39,13 +41,12 @@
 "}"                        { return RBRACE; }
 ","                        { return COMMA; }
 [A-Za-z][A-Za-z0-9_]*      { return IDENT; }
-
+ */
 .                          {
                               fprintf(stderr, "Error: '%s' is not recognized (line %d)\n", yytext, yylineno);
                               exit(1);
                            }
 %%
-
 
 int main(int argc, char **argv) {
     yyparse();

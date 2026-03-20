@@ -9,9 +9,24 @@
 
  // Tokens, tipos, precedências, etc.
 
+ %token PRINT
+ %token RPAREN
+ %token LPAREN
+ %token SEMICOLON
+
 %%
 
-    /* Regras sintáticas e ações semânticas */
+program:
+    command
+    ;
+
+command:
+    printStmt
+    ;
+
+printStmt:
+    PRINT LPAREN RPAREN SEMICOLON
+    ;
 
 %%
     /* Código */
