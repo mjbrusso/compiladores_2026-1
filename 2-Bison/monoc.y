@@ -41,6 +41,7 @@
 %token IDENT
 
 %left PLUS MINUS
+%left TIMES DIVIDE
 
 %%
 
@@ -60,11 +61,19 @@ printStmt:
 
 expression:
       INTLITERAL      {  $$ = atoi(yytext); } 
-    | arithmeticOp    
+    | arithmeticOp
+    | enclosedExpr    
     ;
 
 arithmeticOp:
-    expression PLUS expression  { }
+      expression PLUS expression  { $$ = $1 + $3; }
+    | expression MINUS expression { $$ = $1 - $3; }
+    | expression TIMES expression { $$ = $1 * $3; }
+    | expression DIVIDE expression { $$ = $1 / $3; }
+    ;
+
+enclosedExpr:
+    LPAREN expression RPAREN { $$ = $2; }
     ;
 
 %%
