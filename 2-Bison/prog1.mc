@@ -15,11 +15,14 @@ print(10+20*5);
 
 print((10+20)*5);
 
+var a;
+// VARDEF IDENT SEMICOLON
 
 var a = 10;
 
-b = 500 * 5;
+// VARDEF IDENT ATTRIB expression SEMICOLON
 
-print(a-1);
+//b = 500 * 5;
+// print(a-1);
 
 

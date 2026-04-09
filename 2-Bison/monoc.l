@@ -1,7 +1,11 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
+#include "symtab.h"
 #include "monoc.tab.h"
+
+symtab *ts;
+
 %}
 
 %option yylineno
@@ -39,7 +43,10 @@
 "{"                        { return LBRACE; }
 "}"                        { return RBRACE; }
 ","                        { return COMMA; }
-[A-Za-z][A-Za-z0-9_]*      { return IDENT; }
+[A-Za-z][A-Za-z0-9_]*      { 
+                             yylval.id = symtab_insert(ts, yytext);
+                             return IDENT; 
+                           }
 
 .                          {
                               fprintf(stderr, "Error: '%s' is not recognized (line %d)\n", yytext, yylineno);
@@ -48,7 +55,10 @@
 %%
 
 int main(int argc, char **argv) {
+    ts = symtab_create();
     yyparse();
+
+    symtab_destroy(ts);
     return 0;
 }
 
