@@ -43,7 +43,6 @@
 %token GT
 %token LBRACE
 %token RBRACE
-%token COMMA
 %token<id> IDENT
 
 %left PLUS MINUS

@@ -42,7 +42,6 @@ symtab *ts;
 ">"                        { return GT; }
 "{"                        { return LBRACE; }
 "}"                        { return RBRACE; }
-","                        { return COMMA; }
 [A-Za-z][A-Za-z0-9_]*      { 
                              yylval.id = symtab_insert(ts, yytext);
                              return IDENT; 
