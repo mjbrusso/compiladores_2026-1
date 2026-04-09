@@ -51,13 +51,23 @@ program:
     ;
 
 command:
-    printStmt
+        printStmt
+    |   declaration
+    |   assignment
     ;
 
 printStmt:
       PRINT LPAREN RPAREN SEMICOLON             { printf("\n"); }
     | PRINT LPAREN expression RPAREN SEMICOLON  { printf("%d\n", $3); }
     ;
+
+declaration:
+        VARDEF IDENT SEMICOLON {}
+    |   VARDEF IDENT ATTRIB expression SEMICOLON {}
+    ;
+
+assignment:
+    IDENT ATTRIB expression SEMICOLON {}
 
 expression:
       INTLITERAL      {  $$ = atoi(yytext); } 
