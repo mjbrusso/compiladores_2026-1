@@ -1,0 +1,12 @@
+Estou construindo os analisadores léxicos, sintáticos e semânticos para uma linguagem de programação simples e preciso uma tabela hash para guardar a tabela de símbolos. A chave 'key' é uma string (char *) e os valores associados são os inteiro 'defined' e 'value', ambos inicializados com valor default 0.
+
+O tamanho inicial da tabela deve ser definido em um #define.
+Usar encadeamento externo para tratamento de colisões.
+
+Implementar em dois arquivos (symtab.h e symtab.c) as seguintes funções:
+
+sytab_create()      // Cria a tabela
+symtab_insert()     // Se a chave pasada ainda não existe na tabela insere uma nova entrada e retorna um ponteiro para essa nova entrada. Se a chave já existe, apenas retorna o ponteiro sem inserir novamente.
+symtab_destroy()    // Deleta toda a tabela da memória
+
+
