@@ -51,6 +51,8 @@
 %type<valint> expression
 %type<valint> arithmeticOp
 %type<valint> enclosedExpr
+%type<valint> identifier
+%type<valint> readExpr
 
 %%
 
@@ -72,16 +74,35 @@ printStmt:
 
 declaration:
         VARDEF IDENT SEMICOLON { $2->defined = 1; }
-    |   VARDEF IDENT ATTRIB expression SEMICOLON { }
+    |   VARDEF IDENT ATTRIB expression SEMICOLON { 
+                                    $2->defined = 1;
+                                    $2->value = $4;
+                                }
     ;
 
 assignment:
-    IDENT ATTRIB expression SEMICOLON {}
+    IDENT ATTRIB expression SEMICOLON {
+        if(!$1->defined){
+            printf("%d: '%s' undefined\n", yylineno, $1->key);
+            exit(1);
+        }
+        $1->value = $3;
+    }
 
 expression:
       INTLITERAL      {  $$ = atoi(yytext); } 
     | arithmeticOp
-    | enclosedExpr    
+    | enclosedExpr 
+    | identifier 
+    | readExpr  
+    ;
+
+readExpr:
+    READ LPAREN RPAREN  { 
+                            int aux;
+                            scanf("%d", &aux);
+                            $$ = aux;
+                        }
     ;
 
 arithmeticOp:
@@ -95,6 +116,14 @@ enclosedExpr:
     LPAREN expression RPAREN { $$ = $2; }
     ;
 
+identifier:
+    IDENT       {
+                    if(!$1->defined){
+                        printf("%d: '%s' undefined\n", yylineno, $1->key);
+                        exit(1);
+                    }
+                    $$ = $1->value;
+                }
 %%
     /* Código */
 
